@@ -1,4 +1,3 @@
-import discord
 import requests
 import os
 
@@ -15,7 +14,11 @@ def get_price(ticker):
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
-    return response.json()
+    response = response.json()
+    if 'price' in response:
+        return float(response['price'])
+    else:
+        return -1
 
 
 def currency_conversion(c, amount):
