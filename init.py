@@ -7,12 +7,14 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
+
 cur.execute("""
     CREATE TABLE IF NOT EXISTS inventory (
         user_id VARCHAR,
         symbol VARCHAR,
         num_of_shares INT,
-        avg_cost REAL
+        avg_cost REAL,
+        total_cost REAL
     );
 """)
 cur.execute("""
