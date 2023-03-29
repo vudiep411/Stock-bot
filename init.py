@@ -12,7 +12,7 @@ cur.execute("""
     CREATE TABLE IF NOT EXISTS inventory (
         user_id VARCHAR,
         symbol VARCHAR,
-        num_of_shares INT,
+        num_of_shares REAL,
         avg_cost REAL,
         total_cost REAL
     );
