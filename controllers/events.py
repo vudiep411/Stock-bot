@@ -55,3 +55,17 @@ def buy(symbol, user_id, amount):
     cur.close()
     conn.close()
     return can_buy
+
+def sell(symbol, user_id, amount):
+    conn = get_con()
+    cur = conn.cursor()    
+
+    user_exist = add_user(cur, user_id)
+    if not user_exist:
+        return False
+    
+    can_sell = sell_shares(cur, user_id, symbol, amount)
+    conn.commit()
+    cur.close()
+    conn.close()
+    return can_sell

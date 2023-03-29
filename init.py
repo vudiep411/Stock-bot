@@ -28,7 +28,7 @@ cur.execute("""
         id SERIAL PRIMARY KEY,
         user_id VARCHAR,
         symbol VARCHAR,
-        num_of_shares INT,
+        num_of_shares REAL,
         price REAL,
         date DATE
     );

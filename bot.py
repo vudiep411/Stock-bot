@@ -84,12 +84,23 @@ async def on_message(message):
             amount = float(strs[1])
             symbol = strs[2]
             can_buy = buy(symbol, user_id, amount)
-
             if can_buy:
                 await message.channel.send(f"Successfuly bought {amount} shares of **{symbol}**", reference=message)
             else:
                 await message.channel.send(f"Not enough cash to buy **{symbol}** or Invalid symbol", reference=message)
 
+    #sell
+    elif message.content.startswith("#sell"):
+        user_id = str(message.author)
+        strs = message.content.split(' ')  
+        if len(strs) == 3:
+            amount = float(strs[1])
+            symbol = strs[2]
+            can_sell = sell(symbol, user_id, amount)
+            if can_sell:
+                await message.channel.send(f"Successfuly sold {amount} shares of **{symbol}**", reference=message)
+            else:
+                await message.channel.send(f"Not enough shares to sell **{symbol}** or Invalid symbol", reference=message)
     #cash
     elif message.content.startswith("#cash"):
         user_id = str(message.author)
