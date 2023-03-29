@@ -58,7 +58,7 @@ async def on_message(message):
             rate = currency_conversion(currency, amount)
             if 'rate' in rate:
                 data = currency.split('/')
-                await message.channel.send(f"Conversion rate is: **{rate['rate']}** \n **1** {data[0]} = **{rate['amount']}** {data[1]}", reference=message)
+                await message.channel.send(f"Conversion rate is: **{rate['rate']}** \n **{amount}** {data[0]} = **{rate['amount']}** {data[1]}", reference=message)
             else:
                 await message.channel.send("Invalid params", reference=message)
 
