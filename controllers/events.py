@@ -69,3 +69,22 @@ def sell(symbol, user_id, amount):
     cur.close()
     conn.close()
     return can_sell
+
+def transactions(user_id):
+    conn = get_con()
+    cur = conn.cursor()   
+    result = get_transactions(cur, user_id)
+    conn.commit()
+    cur.close()
+    conn.close()
+    formatted_t = []
+    for data in result:
+        formatted_t.append({
+            "id": data[0],
+            "symbol": data[2],
+            "qty": data[3],
+            "price": data[4],
+            "date": str(data[5]),
+            "buy": data[6]
+        })
+    return formatted_t

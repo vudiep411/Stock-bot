@@ -8,4 +8,5 @@ def bot_docs():
     **#buy `<amount>` `<ticker>`**: *Buy a Stock with x amount of shares*
     **#sell `<amount>` `<ticker>`**: *Sell a Stock with x amount of shares*
     **#cash**: *Show your cash*
+    **#trs**: *Show your transactions history*
     """

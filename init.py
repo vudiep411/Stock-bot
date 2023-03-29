@@ -30,7 +30,8 @@ cur.execute("""
         symbol VARCHAR,
         num_of_shares REAL,
         price REAL,
-        date DATE
+        date DATE,
+        buy BOOLEAN
     );
 """)
 

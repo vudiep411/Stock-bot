@@ -42,7 +42,7 @@ def buy_shares(cur, user_id, symbol, amount):
                 """, (num_of_shares, avg_cost, total_cost, user_id, symbol))
 
             cur.execute("""
-            INSERT INTO transactions (user_id, symbol, num_of_shares, price, date) VALUES (%s, %s, %s, %s, NOW())
+            INSERT INTO transactions (user_id, symbol, num_of_shares, price, date, buy) VALUES (%s, %s, %s, %s, NOW(), TRUE)
             """, (user_id, symbol, amount, price))
             cur.execute("UPDATE trader SET cash=%s WHERE id=%s;", (new_cash, user_id))
             return True
@@ -70,14 +70,17 @@ def sell_shares(cur, user_id, symbol, amount):
                 cash = float(user_data[1])  
                 new_cash = cash + price * amount    
 
-                cur.execute("""
-                UPDATE inventory SET num_of_shares=%s, total_cost=%s WHERE user_id=%s AND symbol=%s;
-                """, (new_no_of_shares, new_total_cost, user_id, symbol))
+                if new_no_of_shares > 0:
+                    cur.execute("""
+                    UPDATE inventory SET num_of_shares=%s, total_cost=%s WHERE user_id=%s AND symbol=%s;
+                    """, (new_no_of_shares, new_total_cost, user_id, symbol))
+                else:
+                    cur.execute("DELETE FROM inventory WHERE user_id=%s AND symbol=%s", (user_id, symbol))
 
                 cur.execute("UPDATE trader SET cash=%s WHERE id=%s;",(new_cash, user_id))
 
                 cur.execute("""
-                INSERT INTO transactions (user_id, symbol, num_of_shares, price, date) VALUES (%s, %s, %s, %s, NOW())
+                INSERT INTO transactions (user_id, symbol, num_of_shares, price, date, buy) VALUES (%s, %s, %s, %s, NOW(), FALSE)
                 """, (user_id, symbol, amount, price))
                 return True
     else: 
@@ -93,4 +96,9 @@ def get_user_pf(cur, user_id):
 def get_cash(cur, user_id):
     cur.execute("SELECT * FROM trader WHERE id=%s;", (user_id,))
     result = cur.fetchone()
+    return result
+
+def get_transactions(cur, user_id):
+    cur.execute("SELECT * FROM transactions WHERE user_id=%s;", (user_id,))
+    result = cur.fetchall()
     return result

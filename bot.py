@@ -73,6 +73,7 @@ async def on_message(message):
             avg = data["avg"]
             formatted_str = f"**{symbol}**   **{qty}**  ---  `Avg cost`: **${avg}**\n"
             display += formatted_str
+        display = "Empty!" if not display else display
         embed = discord.Embed(title="Your Porfolio", description=display, color=discord.Colour.green())
         await message.channel.send(embed=embed, reference=message)
 
@@ -107,6 +108,22 @@ async def on_message(message):
         c = show_cash(user_id)
         await message.channel.send(f"*Your Cash*:\n**${c}**", reference=message)
 
-        
+    #tr
+    elif message.content.startswith("#trs"):
+        user_id = str(message.author)
+        data = transactions(user_id)
+        display=""
+        for t in data:
+            t_id = t['id']
+            symbol = t["symbol"]
+            qty = t['qty']
+            price = t['price']
+            date = t['date']
+            action = 'BUY' if t['buy'] else 'SELL'
+            trans = f"**{t_id} - ** {action} {symbol} at ${price} --- {qty} shares --- {date}\n"
+            display += trans
+        display = "Empty!" if not display else display
+        embed = discord.Embed(title="Your Transactions", description=display, color=discord.Colour.green())
+        await message.channel.send(embed=embed, reference=message)        
 
 client.run(BOT_TOKEN)
