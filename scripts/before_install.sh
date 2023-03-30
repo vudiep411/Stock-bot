@@ -1,4 +1,4 @@
-DIR="/home/ec2-user/express-app"
+DIR="/home/ec2-user/Stock-bot"
 if [ -d "$DIR" ]; then
   echo "${DIR} exists"
 else
