@@ -83,7 +83,7 @@ async def on_message(message):
         strs = message.content.split(' ')
         if len(strs) == 3:
             amount = float(strs[1])
-            symbol = strs[2]
+            symbol = strs[2].upper()
             can_buy = buy(symbol, user_id, amount)
             if can_buy:
                 await message.channel.send(f"Successfuly bought {amount} shares of **{symbol}**", reference=message)
@@ -96,7 +96,7 @@ async def on_message(message):
         strs = message.content.split(' ')  
         if len(strs) == 3:
             amount = float(strs[1])
-            symbol = strs[2]
+            symbol = strs[2].upper()
             can_sell = sell(symbol, user_id, amount)
             if can_sell:
                 await message.channel.send(f"Successfuly sold {amount} shares of **{symbol}**", reference=message)
