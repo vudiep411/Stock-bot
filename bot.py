@@ -139,6 +139,12 @@ async def on_message(message):
         display = "Empty!" if not display else display
         embed = discord.Embed(title="Your Transactions", description=display, color=discord.Colour.green())
         await message.channel.send(embed=embed, reference=message)
+
+    #time
+    elif message.content.startswith("#time"):
+        t = datetime.datetime.now()
+        await message.channel.send(f"Time: {t}", reference=message)
+
      
 
 client.run(BOT_TOKEN)
