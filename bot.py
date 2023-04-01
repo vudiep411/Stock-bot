@@ -143,7 +143,8 @@ async def on_message(message):
     #time
     elif message.content.startswith("#time"):
         t = datetime.datetime.now()
-        await message.channel.send(f"Time: {t}", reference=message)
+        formatted_datetime = t.strftime("%d/%m/%y %H:%M:%S")
+        await message.channel.send(f"Time: {formatted_datetime}", reference=message)
 
      
 
