@@ -47,7 +47,7 @@ async def on_message(message):
             view.add_item(button)
 
             if price != -1:
-                await message.channel.send(f"**{ticker[1]}**: **${price}**", reference=message, view=view)
+                await message.channel.send(f"**{ticker[1]}**: **${price}**", reference=message)
             else:
                 await message.channel.send("Enter a valid symbol", reference=message) 
 
