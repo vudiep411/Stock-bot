@@ -6,7 +6,8 @@ def bot_docs():
     **#curex** `<USD/JPY>` `<1>`: *Exchange a currency to another with the amount*
     **#pf**: *Check your portfolio*
     **#buy `<amount>` `<ticker>`**: *Buy a Stock with x amount of shares*
-    **#sell `<amount>` `<ticker>`**: *Sell a Stock with x amount of shares*
+    **#sell `<amount/all>` `<ticker>`**: *Sell a Stock with x amount of shares*
     **#cash**: *Show your cash*
     **#trs**: *Show your transactions history*
+    **#time**: *Show the current time of the Bot location*
     """
