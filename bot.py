@@ -13,9 +13,8 @@ load_dotenv()  # load variables from .env file
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
-current_time = datetime.datetime.now().time()
 start_time = datetime.time(hour=6, minute=30)
-end_time = datetime.time(hour=13, minute=0)
+end_time = datetime.time(hour=16, minute=0)
 
 
 @client.event
@@ -25,6 +24,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    current_time = datetime.datetime.now().time()
     if message.author == client.user:
         return
 
