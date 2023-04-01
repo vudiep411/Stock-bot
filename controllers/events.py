@@ -70,6 +70,21 @@ def sell(symbol, user_id, amount):
     conn.close()
     return can_sell
 
+
+def sell_all(user_id):
+    conn = get_con()
+    cur = conn.cursor() 
+    result = get_user_pf(cur, user_id)
+    for data in result:
+        r = sell_shares(cur, user_id, data[1], data[2])
+        if not r:
+            return r
+    conn.commit()
+    cur.close()
+    conn.close() 
+    return r   
+
+
 def transactions(user_id):
     conn = get_con()
     cur = conn.cursor()   

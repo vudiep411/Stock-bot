@@ -5,7 +5,7 @@ from discord.ui import Button, View, Modal
 from controllers.api import *
 from controllers.events import *
 from controllers.docs import *
-
+import datetime
 
 
 load_dotenv()  # load variables from .env file
@@ -13,6 +13,9 @@ load_dotenv()  # load variables from .env file
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
+current_time = datetime.datetime.now().time()
+start_time = datetime.time(hour=6, minute=30)
+end_time = datetime.time(hour=13, minute=0)
 
 
 @client.event
@@ -24,7 +27,7 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    
+
     if message.content.startswith('#help'):
         documentation = bot_docs()
         embed = discord.Embed(title = "Stock-Bot | Help Menu", description=documentation)
@@ -79,29 +82,39 @@ async def on_message(message):
 
     #buy
     elif message.content.startswith("#buy"):
-        user_id = str(message.author)
-        strs = message.content.split(' ')
-        if len(strs) == 3:
-            amount = float(strs[1])
-            symbol = strs[2].upper()
-            can_buy = buy(symbol, user_id, amount)
-            if can_buy:
-                await message.channel.send(f"Successfuly bought {amount} shares of **{symbol}**", reference=message)
-            else:
-                await message.channel.send(f"Not enough cash to buy **{symbol}** or Invalid symbol", reference=message)
+        if start_time <= current_time <= end_time:
+            user_id = str(message.author)
+            strs = message.content.split(' ')
+            if len(strs) == 3:
+                amount = float(strs[1])
+                symbol = strs[2].upper()
+                can_buy = buy(symbol, user_id, amount)
+                if can_buy:
+                    await message.channel.send(f"Successfuly bought {amount} shares of **{symbol}**", reference=message)
+                else:
+                    await message.channel.send(f"Not enough cash to buy **{symbol}** or Invalid symbol", reference=message)
+        else:
+            await message.channel.send("Market Closed", reference=message)
 
     #sell
     elif message.content.startswith("#sell"):
-        user_id = str(message.author)
-        strs = message.content.split(' ')  
-        if len(strs) == 3:
-            amount = float(strs[1])
-            symbol = strs[2].upper()
-            can_sell = sell(symbol, user_id, amount)
-            if can_sell:
-                await message.channel.send(f"Successfuly sold {amount} shares of **{symbol}**", reference=message)
-            else:
-                await message.channel.send(f"Not enough shares to sell **{symbol}** or Invalid symbol", reference=message)
+        if start_time <= current_time <= end_time:
+            user_id = str(message.author)
+            strs = message.content.split(' ')  
+            if len(strs) >= 2:
+                if strs[1] == "all":
+                    sell_all(user_id)
+                    await message.channel.send("You sold everything!", reference=message)
+                elif len(strs) == 3:
+                    amount = float(strs[1])
+                    symbol = strs[2].upper()
+                    can_sell = sell(symbol, user_id, amount)
+                    if can_sell:
+                        await message.channel.send(f"Successfuly sold {amount} shares of **{symbol}**", reference=message)
+                    else:
+                        await message.channel.send(f"Not enough shares to sell **{symbol}** or Invalid symbol", reference=message)
+        else:
+            await message.channel.send("Market Closed", reference=message)
     #cash
     elif message.content.startswith("#cash"):
         user_id = str(message.author)
@@ -124,6 +137,7 @@ async def on_message(message):
             display += trans
         display = "Empty!" if not display else display
         embed = discord.Embed(title="Your Transactions", description=display, color=discord.Colour.green())
-        await message.channel.send(embed=embed, reference=message)        
+        await message.channel.send(embed=embed, reference=message)
+     
 
 client.run(BOT_TOKEN)
