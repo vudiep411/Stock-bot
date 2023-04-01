@@ -13,8 +13,8 @@ load_dotenv()  # load variables from .env file
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
-start_time = datetime.time(hour=6, minute=30)
-end_time = datetime.time(hour=16, minute=0)
+start_time = datetime.time(hour=14, minute=30)
+end_time = datetime.time(hour=21, minute=0)
 
 
 @client.event
@@ -25,6 +25,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     current_time = datetime.datetime.now().time()
+    current_day = datetime.datetime.now().weekday()
     if message.author == client.user:
         return
 
@@ -82,7 +83,7 @@ async def on_message(message):
 
     #buy
     elif message.content.startswith("#buy"):
-        if start_time <= current_time <= end_time:
+        if (start_time <= current_time <= end_time) and current_day < 5 :
             user_id = str(message.author)
             strs = message.content.split(' ')
             if len(strs) == 3:
@@ -98,7 +99,7 @@ async def on_message(message):
 
     #sell
     elif message.content.startswith("#sell"):
-        if start_time <= current_time <= end_time:
+        if (start_time <= current_time <= end_time) and current_day < 5:
             user_id = str(message.author)
             strs = message.content.split(' ')  
             if len(strs) >= 2:
