@@ -148,7 +148,7 @@ async def on_message(message):
 
     elif message.content.startswith("#hello"):
         user_id = str(message.author)
-        await message.channel.send(f"Hello {user_id}", reference=message)
+        await message.channel.send(f"Hello Bitch", reference=message)
 
 
      
