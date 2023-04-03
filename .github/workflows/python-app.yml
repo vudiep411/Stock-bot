@@ -17,6 +17,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create .env
+      run: |
+        echo API_KEY=${{ secrets.API_KEY }} >> .env
+        echo API_KEY=${{ secrets.BOT_TOKEN }} >> .env
+        echo API_KEY=${{ secrets.DATABASE_URL }} >> .env
+        
     - name: Run Service
       run: |
         sudo systemctl restart stockbot.service
+
