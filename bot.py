@@ -13,8 +13,8 @@ load_dotenv()  # load variables from .env file
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
-start_time = datetime.time(hour=14, minute=30)
-end_time = datetime.time(hour=21, minute=0)
+start_time = datetime.time(hour=13, minute=30)
+end_time = datetime.time(hour=20, minute=0)
 
 
 @client.event
