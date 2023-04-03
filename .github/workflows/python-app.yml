@@ -14,18 +14,18 @@ jobs:
   build:
 
     runs-on: self-hosted
-
+    environment: .env
     steps:
     - uses: actions/checkout@v3
-      env:
-        API_KEY: ${{ secrets.API_KEY }}
-        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # env:
+      #   API_KEY: ${{ secrets.API_KEY }}
+      #   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      #   DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: Create .env
       run: |
-        echo API_KEY=$env:API_KEY >> .env
-        echo BOT_TOKEN=$env:BOT_TOKEN >> .env
-        echo DATABASE_URL=$env:DATABASE_URL >> .env
+        echo API_KEY=${{ secrets.API_KEY }} >> .env
+        echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} >> .env
+        echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
 
     - name: Run Service
       run: |
