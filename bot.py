@@ -14,7 +14,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 start_time = datetime.time(hour=13, minute=30)
-end_time = datetime.time(hour=20, minute=0)
+end_time = datetime.time(hour=23, minute=0)
 
 
 @client.event
