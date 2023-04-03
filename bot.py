@@ -146,6 +146,11 @@ async def on_message(message):
         formatted_datetime = t.strftime("%m/%d/%y %H:%M:%S")
         await message.channel.send(f"Time: {formatted_datetime}", reference=message)
 
+    elif message.content.startswith("#hello"):
+        user_id = str(message.author)
+        await message.channel.send(f"Hello {user_id}", reference=message)
+
+
      
 
 client.run(BOT_TOKEN)
