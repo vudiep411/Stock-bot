@@ -10,4 +10,6 @@ def bot_docs():
     **#cash**: *Show your cash*
     **#trs**: *Show your transactions history*
     **#time**: *Show the current time of the Bot location*
+    **#ma**: *Show most active ticker on the market*
+    **#mw**: *Show most watched ticker on the market*
     """
