@@ -146,9 +146,21 @@ async def on_message(message):
         formatted_datetime = t.strftime("%m/%d/%y %H:%M:%S")
         await message.channel.send(f"Time: {formatted_datetime}", reference=message)
 
-    elif message.content.startswith("#hello"):
-        user_id = str(message.author)
-        await message.channel.send(f"Hello Bitch", reference=message)
+    #mw
+    elif message.content.startswith("#mw"):
+        data = most_watch()
+        data_str = "Most Watched Tickers \n"
+        i = 1
+        quotes = data[0]["quotes"][0:50]
+        for ticker in quotes:
+            data_str += str(i) + ". " + ticker + "\n"
+            i += 1
+        await message.channel.send(data_str, reference=message)
+
+    #ma
+    elif message.content.startswith("#ma"):
+        result = most_active()
+        await message.channel.send(result, reference=message)
 
 
      

@@ -33,4 +33,33 @@ def currency_conversion(c, amount):
     response = requests.request("GET", url, headers=headers, params=querystring)
     return response.json()
 
+def most_watch():
+    API_KEY = os.getenv('API_KEY')
+    url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/tr/trending"
+
+    headers = {
+        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Host": "yahoo-finance15.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers)
+    return response.json()
     
+def most_active():
+    API_KEY = os.getenv('API_KEY')
+    url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/co/collections/most_actives"
+    headers = {
+        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Host": "yahoo-finance15.p.rapidapi.com"
+    }
+
+    res = "Most Active Ticker: \n"
+    response = requests.request("GET", url, headers=headers)
+    response = response.json()
+    quotes = response["quotes"]
+    i = 1
+    for ticker in quotes:
+        res += str(i) + ". " + ticker['symbol'] + "\n"
+        i += 1
+
+    return res
