@@ -148,19 +148,15 @@ async def on_message(message):
 
     #mw
     elif message.content.startswith("#mw"):
-        data = most_watch()
-        data_str = "Most Watched Tickers \n"
-        i = 1
-        quotes = data[0]["quotes"][0:50]
-        for ticker in quotes:
-            data_str += str(i) + ". " + ticker + "\n"
-            i += 1
-        await message.channel.send(data_str, reference=message)
+        display = most_watch()
+        embed = discord.Embed(title="Most Watched Tickers", description=display, color=discord.Colour.blue())
+        await message.channel.send(embed=embed, reference=message)
 
     #ma
     elif message.content.startswith("#ma"):
-        result = most_active()
-        await message.channel.send(result, reference=message)
+        display = most_active()
+        embed = discord.Embed(title="Most Active Tickers", description=display, color=discord.Colour.red())
+        await message.channel.send(embed=embed, reference=message)
 
 
      

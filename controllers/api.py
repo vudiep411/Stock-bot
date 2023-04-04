@@ -43,7 +43,14 @@ def most_watch():
     }
 
     response = requests.request("GET", url, headers=headers)
-    return response.json()
+    response = response.json()
+    display = ""
+    i = 1
+    quotes = response[0]["quotes"][0:50]
+    for ticker in quotes:
+        display += str(i) + ". " + ticker + "\n"
+        i += 1
+    return display
     
 def most_active():
     API_KEY = os.getenv('API_KEY')
@@ -53,7 +60,7 @@ def most_active():
         "X-RapidAPI-Host": "yahoo-finance15.p.rapidapi.com"
     }
 
-    res = "Most Active Ticker: \n"
+    res = ""
     response = requests.request("GET", url, headers=headers)
     response = response.json()
     quotes = response["quotes"]
