@@ -17,10 +17,6 @@ jobs:
     environment: .env
     steps:
     - uses: actions/checkout@v3
-      # env:
-      #   API_KEY: ${{ secrets.API_KEY }}
-      #   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      #   DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: Create .env
       run: |
         echo API_KEY=${{ secrets.API_KEY }} >> .env
